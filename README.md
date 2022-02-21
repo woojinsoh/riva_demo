@@ -15,7 +15,7 @@ It contains how to convert NeMo to Riva format, how to build Riva to get RMIR, a
 Some additional information about NeMo is included.
 
 ## Demo environment
-<img src="./resources/images/demo_env.png" width="50%" height="50%" title="Demo Env" alt="Demo"></img>
+<img src="./resources/images/demo_env.png" width="100%" height="100%" title="Demo Env" alt="Demo"></img>
 
 Docker command used to launch NeMo Container:
 ```bash
