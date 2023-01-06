@@ -13,9 +13,9 @@ client_config = {
 }
 
 riva_config = {
-    "RIVA_SPEECH_API_URL": "riva-speech:50051",#"10.110.42.153:50051", # Replace the IP & port with your hosted Riva endpoint
+    "RIVA_SPEECH_API_URL": "localhost:50051", # Replace the IP & port with your hosted Riva endpoint
     "ENABLE_QA": "QA unavailable in this VA version. Coming soon",
-    "WEATHERSTACK_ACCESS_KEY": "f4894a769c5e9692e4dced5ffdb4cc49",  # Get your access key at - https://weatherstack.com/
+    "WEATHERSTACK_ACCESS_KEY": "",  # Get your access key at - https://weatherstack.com/
     "VERBOSE": True  # print logs/details for diagnostics
 }
 
@@ -36,5 +36,5 @@ tts_config = {
     "VERBOSE": False,
     "SAMPLE_RATE": 22050,
     "LANGUAGE_CODE": "en-US",  # a BCP-47 language tag
-    "VOICE_NAME": "ljspeech",
+    "VOICE_NAME": "English-US-Female-1", # Options are English-US-Female-1 and English-US-Male-1
 }

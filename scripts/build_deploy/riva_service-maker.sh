@@ -1,1 +1,0 @@
-docker run --init -it --rm --gpus '"device=2"' -v riva-model-repo:/data -v $HOME/workspace/riva_demo:/servicemaker-dev --name riva-service-maker nvcr.io/nvidia/riva/riva-speech:1.9.0-beta-servicemaker /bin/bash

@@ -8,9 +8,11 @@
 import sys
 import re
 import grpc
-import riva_api.audio_pb2 as ra
-import riva_api.riva_asr_pb2 as rasr
-import riva_api.riva_asr_pb2_grpc as rasr_srv
+import riva.client
+
+# import riva_api.audio_pb2 as ra
+# import riva_api.riva_asr_pb2 as rasr
+# import riva_api.riva_asr_pb2_grpc as rasr_srv
 from six.moves import queue
 from config import riva_config, asr_config
 
@@ -37,8 +39,11 @@ class ASRPipe(object):
     def start(self):
         if self.verbose:
             print('[Riva ASR] Creating Stream ASR channel: {}'.format(riva_config["RIVA_SPEECH_API_URL"]))
-        self.channel = grpc.insecure_channel(riva_config["RIVA_SPEECH_API_URL"])
-        self.asr_client = rasr_srv.RivaSpeechRecognitionStub(self.channel)
+        # self.channel = grpc.insecure_channel(riva_config["RIVA_SPEECH_API_URL"])
+        self.channel = riva_config["RIVA_SPEECH_API_URL"]
+        self.auth = riva.client.Auth(uri=self.channel)
+        self.asr_client = riva.client.ASRService(self.auth)
+        # self.asr_client = rasr_srv.RivaSpeechRecognitionStub(self.channel)
 
     def close(self):
         self.closed = True

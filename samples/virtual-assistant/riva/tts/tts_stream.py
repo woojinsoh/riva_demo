@@ -19,7 +19,7 @@ import time
 VERBOSE = False
 SAMPLE_RATE = 22050
 LANGUAGE_CODE = "en-US"
-VOICE_NAME = "ljspeech"
+VOICE_NAME = "English-US-Female-1"
 
 class TTSPipe(object):
     """Opens a gRPC channel to Riva TTS to synthesize speech
@@ -84,9 +84,8 @@ class TTSPipe(object):
                     responses = self.tts_client.SynthesizeOnline(req)
 
                     for resp in responses:
-                        datalen = len(resp.audio) // 4
-                        data32 = np.ndarray(buffer=resp.audio, dtype=np.float32, shape=(datalen, 1))
-                        data16 = np.int16(data32 * 23173.26)  # / 1.414 * 32767.0)
+                        datalen = len(resp.audio) // 2
+                        data16 = np.ndarray(buffer=resp.audio, dtype=np.int16, shape=(datalen, 1))
                         speech = bytes(data16.data)
                         duration += len(data16) * 2 / (self.sample_rate * 1 * 16 / 8)
                         self.current_tts_duration += duration

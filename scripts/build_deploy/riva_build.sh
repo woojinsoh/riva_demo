@@ -8,9 +8,9 @@
 
 
 riva-build speech_synthesis \
-	/servicemaker-dev/outputs/FastPitch_HifiGan_Finetuned_FebMeetup.rmir \
-	/servicemaker-dev/outputs/FastPitch_Finetuned_FebMeetup.riva \
-	/servicemaker-dev/outputs/Hifigan_Finetuned_FebMeetup.riva \
+	/servicemaker-dev/outputs/FastPitch_HifiGan_Finetuned_FebMeetup.rmir:woojin \
+	/servicemaker-dev/outputs/FastPitch_Finetuned_FebMeetup.riva:woojin \
+	/servicemaker-dev/outputs/Hifigan_Finetuned_FebMeetup.riva:woojin \
 	--voice_name=woojin
 
 

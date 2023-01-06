@@ -8,6 +8,10 @@ outputs/
 
 Priors6097/
 
+resources/
+
+!resources/images/
+
 audio
 
 .ipynb_checkpoints/
