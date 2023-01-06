@@ -14,50 +14,59 @@ It contains how to convert NeMo to Riva format, how to build Riva to get RMIR, a
 ##### 4_supplement_NeMo.ipynb(Optional)
 Some additional information about NeMo is included.
 
-##### 5_riva_korean_asr.ipynb(updated at Jan.2023)
+##### 5_riva_korean_asr.ipynb(newly added at Jan.2023)
 Korean ASR model demonstration with riva
 
 ## Demo environment
+Note that the RIVA Server and Client are using the same docker image. I'd like to make sure that the **docker network** `riva-speech` might not be actually needed according to the environment(anyone who tires this demo can adjust it according to your own enviornment). In this demo case, the remote machine is running within the VPN, which requires the private docker network defined to connect with each other, and to the browser for the Juptyerlab. 
 <img src="./resources/images/demo_env.png" width="100%" height="100%" title="Demo Env" alt="Demo"></img>
-
-Docker command used to launch NeMo Container:
-```bash
-docker run --gpus device=3 -it --rm -p 1005:8888 -p 8009:8009 --network riva-speech -v <my workspace where this repo ls cloned>:/wsoh/workspace nvcr.io/nvidia/nemo.1.5.1
-```
-The **docker network** flag `--network riva-speech` might not be needed according to the environment.
 
 
 ## Prerequisite
-1. Get access to NGC and install NGC CLI tools.
+1. Clone the repository.
+    ```bash
+    git clone https://github.com/woojinsoh/riva_demo.git
+    cd riva_demo
+    ```
+
+2. Get access to NGC and install NGC CLI tools.
    - https://docs.nvidia.com/ngc/ngc-overview/index.html#registering-activating-ngc-account
 
-2. Download Riva resources from NGC
+3. Download Riva resources from NGC
     ```bash
     mkdir –p ./resources && cd resources
     ngc registry resource download-version "nvidia/riva/riva_quickstart:2.8.1" # updated(2023.01.02)
     ```
 
-3. Create docker network
+4. Create docker network
     ```bash
     docker network create riva-speech
     ```
 
-4. Initialize and start Riva Server
+5. Initialize and start Riva Server
+    - Move to the resource directory.
+    ```bash
+    cd riva_quickstart:2.8.1
+    ```
     - Modify `config.sh` with your preffered configuration from downloaded resources. Then, run:
     ```bash
-    riva_init.sh
+    bash riva_init.sh  # it usually takes over 30 mins by default
     ```
 
-5. Start Riva Server
-    - Add `--network riva-speech` option to docker running command in `riva_start.sh` from downloaded resources. Then, run:
+6. Start Riva Server
+    - Add `--net=riva-speech` option to docker running command in `riva_start.sh` from downloaded resources. Then, run:
     ```bash
-    riva_start.sh
+    bash riva_start.sh
     ```
 
-5. Start Riva Client
-    - Add some options to docker running command in `riva_start_client.sh`. For example, mount your workspace to the docker environment(i.e., `-v <my workspace path>:/workspace`) and apply the same docker network(`--net=riva-speech`) with riva server. Additional port mappings(`-p 1005:8888` for jupyterlab, `-p 8009:8009` for additional usage) are also required. Then, run:
+7. Start Riva Client
+    - Add some options to docker running command in `riva_start_client.sh`. For example, 
+        - Mount your workspace to the docker environment(i.e., `-v <myworkspace_path>:/workspace`) 
+        - Apply the same docker network(`--net=riva-speech`) with that of the Riva server. 
+        - Additional port mappings(`-p 1005:8888` for jupyterlab, `-p 8009:8009` for additional usage) are also required. 
+    - Then, run:
     ```bash
-    riva_start_client.sh
+    bash riva_start_client.sh
     ```
 
 ## Riva Resources
