@@ -8,6 +8,8 @@ outputs/
 
 Priors6097/
 
+samples/simple_kr_asr/recording_samples/*.wav
+
 resources/
 
 !resources/images/

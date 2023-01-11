@@ -5,12 +5,11 @@
 # README.md file.
 # ==============================================================================
 
+import riva.client
 import sys
 import re
 import grpc
-import riva.client
-
-# import riva_api.audio_pb2 as ra
+# import riva_api.riva_audio_pb2 as ra
 # import riva_api.riva_asr_pb2 as rasr
 # import riva_api.riva_asr_pb2_grpc as rasr_srv
 from six.moves import queue
@@ -35,14 +34,13 @@ class ASRPipe(object):
         self._buff = queue.Queue()
         self._transcript = queue.Queue()
         self.closed = False
-
+    
     def start(self):
         if self.verbose:
             print('[Riva ASR] Creating Stream ASR channel: {}'.format(riva_config["RIVA_SPEECH_API_URL"]))
+        self.auth = riva.client.Auth(uri=riva_config["RIVA_SPEECH_API_URL"])
+        self.asr_client = riva.client.ASRService(auth)
         # self.channel = grpc.insecure_channel(riva_config["RIVA_SPEECH_API_URL"])
-        self.channel = riva_config["RIVA_SPEECH_API_URL"]
-        self.auth = riva.client.Auth(uri=self.channel)
-        self.asr_client = riva.client.ASRService(self.auth)
         # self.asr_client = rasr_srv.RivaSpeechRecognitionStub(self.channel)
 
     def close(self):
@@ -154,15 +152,15 @@ class ASRPipe(object):
         # See http://g.co/cloud/speech/docs/languages
         # for a list of supported languages.
         self.start()
-        config = rasr.RecognitionConfig(
-            encoding=ra.AudioEncoding.LINEAR_PCM,
+        config = riva.client.RecognitionConfig(
+            encoding=riva.client.AudioEncoding.LINEAR_PCM,
             sample_rate_hertz=self.sampling_rate,
             language_code=self.language_code,
             max_alternatives=1,
             enable_automatic_punctuation=self.enable_automatic_punctuation,
             verbatim_transcripts=True
         )
-        streaming_config = rasr.StreamingRecognitionConfig(
+        streaming_config = riva.client.StreamingRecognitionConfig(
             config=config,
             interim_results=self.stream_interim_results)
 

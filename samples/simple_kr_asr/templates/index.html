@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Speech Recognition in Python</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/index.css') }}" />
+
+	<!-- Latest compiled and minified Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+</head>
+<body>
+    <h1>Simple ASR with NVIDIA Riva</h1>
+    <br><br>
+    <h3>1.Record your voice.</h3>
+    <br>
+    <div style="max-width: 28em;">
+		<p>Convert recorded audio to wav:</p>
+
+		<select id="encodingTypeSelect">
+		  <option value="wav">Waveform Audio (.wav)</option>
+		</select>
+		<div id="controls">
+			<button id="recordButton">Record</button>
+			<button id="stopButton" disabled>Stop</button>
+		</div>
+		<div id="formats"></div>
+		<pre>Log</pre>
+		<pre id="log"></pre>
+        <br>
+        <h3>2.Download your record. </h3>
+		
+		<ol id="recordingsList"></ol>
+	</div>
+
+    <!-- <div id="speechContainer"> -->
+    <br>
+    <form method="post" action="/" enctype="multipart/form-data">
+        <!-- <input type="file" name="file"/> -->
+        <h3>3. Convert audio to text </h3> 
+        <p>Select the Korean ASR model from Riva</p>
+        <select name="model-select">
+            <option value="woojin-conformer-ko-KR-asr-streaming">Conformer-CTC-ko-KR-streaming</option>
+            <option value="woojin-citrinet-1024-ko-KR-asr-streaming">Citrinet-1024-ko-KR-streaming</option>
+        </select>
+        <div id="submit-button">
+            <input type="submit" id="submitButton" value="Transcribe"/>
+        </div>
+    </form>
+    {% if transcript != "" %}
+        <div id="speechTranscriptContainer">
+            <h3>Transcription</h3>
+            <p id="speechText">{{ transcript }}</p>
+        </div>
+    {% endif %}
+
+    <!-- </div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- inserting these scripts at the end to be able to use all the elements in the DOM -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='js/WebAudioRecorder.min.js') }}" ></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}" ></script>
+
+
+
+
+
+
+</body>
+</html>
